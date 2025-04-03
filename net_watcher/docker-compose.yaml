@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  api-nginx:
+    build: ./net_watcher_api
+    container_name: api-nginx
+    ports:
+      - "decidir"
+    depends_on:
+      - "servidor"
