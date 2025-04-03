@@ -1,0 +1,21 @@
+# Files and directories created by pub
+.dart_tool/
+.packages
+.pub-cache/
+build/
+
+# Logs, cache, backups
+*.log
+*.tmp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos del sistema Linux/Windows
+*.swp
+*.swo
+
+# Archivos personales
+*.local.dart
+.env
