@@ -8,10 +8,14 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY web /usr/share/nginx/html
 
 # Copiar configuración personalizada de NGINX
-COPY nginx.conf /etc/nginx/nginx.confi
+COPY nginx.conf.template /etc/nginx/nginx.conf.template
 
-# Expone el puerto por defecto de NGINX
-EXPOSE 80
+RUN apk add --no-cache gettext
+
+ENV SERVER_NAME=web.netwatcher.local \
+    PORT=80 \
+    ROOT_DIR=/usr/share/nginx/html
 
 # Inicia NGINX en modo foreground
-CMD ["nginx", "-g", "daemon off;"]
+CMD envsubst '$SERVER_NAME $PORT $ROOT_DIR' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && \
+    nginx -g 'daemon off;'

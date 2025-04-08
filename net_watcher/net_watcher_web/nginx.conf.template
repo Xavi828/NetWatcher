@@ -1,0 +1,36 @@
+events {}
+http {
+    server {
+        # Escucha en el puerto 80, puerto por defecto para HTTP
+        listen ${PORT};
+
+        # Nombre del servidor.
+        server_name ${SERVER_NAME};
+
+        # Carpeta raíz donde se encuentran los archivos estáticos de Flutter Web
+        root ${ROOT_DIR};
+        index index.html;
+
+        # Ruta principal: intenta servir archivos reales, y si no existen, sirve index.html (para rutas internas de Flutter)
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+        # Recursos estáticos: activa cacheo de archivos como imágenes, CSS, JS, fuentes, etc.
+        location ~* \.(?:ico|css|js|gif|jpe?g|png|woff2?)$ {
+            expires 30d;                      # Cache de 30 días
+            access_log off;                  # No registrar accesos para estos archivos
+            add_header Cache-Control "public";
+        }
+
+        # Activar compresión GZIP para reducir el tamaño de respuesta
+        gzip on;
+        gzip_types text/plain application/javascript text/css application/json application/xml;
+        gzip_min_length 256;  # No comprimir archivos muy pequeños
+
+        # Cabeceras de seguridad
+        add_header X-Frame-Options "DENY";                     # Evita que la web sea embebida en iframes
+        add_header X-XSS-Protection "1; mode=block";           # Protege contra ataques XSS
+        add_header X-Content-Type-Options "nosniff";           # Evita que el navegador "adivine" el tipo de contenido
+    }
+}
