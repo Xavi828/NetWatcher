@@ -1,0 +1,36 @@
+# Definir un bloque upstream antes del server
+upstream web_backend {
+    server ${WEB_SERVER1}:8090;
+    server ${WEB_SERVER2}:8090;
+}
+
+server {
+    listen          ${PORT};
+    server_name     ${SERVER_NAME};
+
+    # Ruta API: redirigir al servidor ServerPod (backend de la API)
+    location /api/ {
+        proxy_pass          https://${BACKEND_HOSTNAME}:8090;   #ServerPod backend
+        proxy_set_header    Host $host;
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto $scheme;
+
+        # Manejo de errores de proxy
+        proxy_connect_timeout   10s;
+        proxy_read_timeout      60s;
+        proxy_send_timeout      60s;
+
+        # Redirigir si el backend no está disponible
+        error_page 502 503 504 /error_page.html;
+    }
+
+    # Ruta para el balanceo de carga entre los servidores web
+    location / {
+        proxy_pass http://web_backend;
+    }
+    
+    # Configuración de los logs
+    error_log       /var/log/nginx/error.log warn;  # Ubicación para los logs de error
+    access_log      /var/log/nginx/access.log; # Ubicación para los logs de accesos
+}
