@@ -19,3 +19,11 @@ services:
       PORT: 80
       ROOT_DIR: "/usr/share/nginx/html"
       SERVER_NAME: web2.netwatcher.com
+
+  api-nginx:
+    build: ./net_watcher_api
+    container_name: api-nginx
+    ports:
+      - "decidir"
+    depends_on:
+      - "servidor"
