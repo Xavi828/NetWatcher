@@ -5,10 +5,10 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copiamos los archivos estáticos generados por Flutter Web al contenedor
-COPY web /usr/share/nginx/html
+COPY ./flutter_web/build/web /usr/share/nginx/html
 
 # Copiar configuración personalizada de NGINX
-COPY nginx.conf.template /etc/nginx/nginx.conf.template
+COPY ./config/nginx.conf.template /etc/nginx/nginx.conf.template
 
 RUN apk add --no-cache gettext
 
@@ -16,6 +16,9 @@ ENV SERVER_NAME=web.netwatcher.local \
     PORT=80 \
     ROOT_DIR=/usr/share/nginx/html
 
+# Copiamos el script
+COPY ./scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Inicia NGINX en modo foreground
-CMD envsubst '$SERVER_NAME $PORT $ROOT_DIR' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && \
-    nginx -g 'daemon off;'
+ENTRYPOINT ["/entrypoint.sh"]

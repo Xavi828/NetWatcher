@@ -1,16 +1,20 @@
 services:
+
   nginx1:
-    build: .
+    build: ./net_watcher_web
+    container_name: net_watcher_web_1
     ports:
-      - "8080:80"
+      - "8081:80"
     environment:
       PORT: 80
       ROOT_DIR: "/usr/share/nginx/html"
       SERVER_NAME: web.netwatcher.com
+
   nginx2:
-    build: .
+    build: ./net_watcher_web
+    container_name: net_watcher_web_2
     ports:
-      - "8081:80"
+      - "8082:80"
     environment:
       PORT: 80
       ROOT_DIR: "/usr/share/nginx/html"
