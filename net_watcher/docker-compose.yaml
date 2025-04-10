@@ -1,29 +1,43 @@
+networks:
+  netwatcher_net:
+    external: true
+
 services:
 
   nginx1:
     build: ./net_watcher_web
     container_name: net_watcher_web_1
+    networks:
+      - netwatcher_net
     ports:
       - "8081:80"
     environment:
       PORT: 80
       ROOT_DIR: "/usr/share/nginx/html"
-      SERVER_NAME: web.netwatcher.com
+      SERVER_NAME: web.netwatcher.local
 
   nginx2:
     build: ./net_watcher_web
     container_name: net_watcher_web_2
+    networks:
+      - netwatcher_net
     ports:
       - "8082:80"
     environment:
       PORT: 80
       ROOT_DIR: "/usr/share/nginx/html"
-      SERVER_NAME: web2.netwatcher.com
+      SERVER_NAME: web2.netwatcher.local
 
   api-nginx:
     build: ./net_watcher_api
     container_name: api-nginx
+    networks:
+      - netwatcher_net
     ports:
-      - "decidir"
-    depends_on:
-      - "servidor"
+      - "8080:80"
+    environment:
+      PORT: 80
+      SERVER_NAME: api.netwatcher.com 
+      BACKEND_HOSTNAME: net_watcher_web_1:80
+      WEB_SERVER1: net_watcher_web_1:80
+      WEB_SERVER2: net_watcher_web_2:80

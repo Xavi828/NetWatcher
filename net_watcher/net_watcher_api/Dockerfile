@@ -9,8 +9,8 @@ RUN apk add --no-cache gettext
 ENV PORT=80 \
     SERVER_NAME=api.netwatcher.com \
     BACKEND_HOSTNAME=servidor_backend \
-    WEB_SERVER1=web.netwatcher.local \
-    WEB_SERVER2=web2.netwatcher.local
+    WEB_SERVER1=localhost:8081 \
+    WEB_SERVER2=localhost:8082
 
 # Exponer puerto 80 y 443
 EXPOSE 80 443

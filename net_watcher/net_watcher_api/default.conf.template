@@ -1,7 +1,7 @@
 # Definir un bloque upstream antes del server
 upstream web_backend {
-    server ${WEB_SERVER1}:8090;
-    server ${WEB_SERVER2}:8090;
+    server ${WEB_SERVER1};
+    server ${WEB_SERVER2};
 }
 
 server {
@@ -10,7 +10,7 @@ server {
 
     # Ruta API: redirigir al servidor ServerPod (backend de la API)
     location /api/ {
-        proxy_pass          https://${BACKEND_HOSTNAME}:8090;   #ServerPod backend
+        proxy_pass          http://${BACKEND_HOSTNAME};   #ServerPod backend
         proxy_set_header    Host $host;
         proxy_set_header    X-Real-IP $remote_addr;
         proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;

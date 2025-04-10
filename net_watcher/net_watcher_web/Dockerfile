@@ -20,5 +20,8 @@ ENV SERVER_NAME=web.netwatcher.local \
 COPY ./scripts/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Pasamos a modo linux
+RUN apk add --no-cache dos2unix && dos2unix /entrypoint.sh
+
 # Inicia NGINX en modo foreground
 ENTRYPOINT ["/entrypoint.sh"]
