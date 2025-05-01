@@ -81,8 +81,8 @@ staging_autoscaling_desired_capacity = 1
 
 # The deployment bucket name needs to be unique and can only contain lower case
 # letters and dashes (no underscored allowed).
-deployment_bucket_name              = "net-watcher-deployment-9372594"
-public_storage_bucket_name          = "net-watcher-public-storage-9372594"
-private_storage_bucket_name         = "net-watcher-private-storage-9372594"
-public_storage_bucket_name_staging  = "net-watcher-public-storage-staging-9372594"
-private_storage_bucket_name_staging = "net-watcher-private-storage-staging-9372594"
+deployment_bucket_name              = "net-watcher-deployment-8625617"
+public_storage_bucket_name          = "net-watcher-public-storage-8625617"
+private_storage_bucket_name         = "net-watcher-private-storage-8625617"
+public_storage_bucket_name_staging  = "net-watcher-public-storage-staging-8625617"
+private_storage_bucket_name_staging = "net-watcher-private-storage-staging-8625617"

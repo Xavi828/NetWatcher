@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: net_watcher
-      POSTGRES_PASSWORD: "vmocUbPLPGtdYZaVe66i9kbr1ltxLMwD"
+      POSTGRES_PASSWORD: "eayHbqs76JlBt1ftJVj8BFBnkkb9mdMt"
     volumes:
       - net_watcher_data:/var/lib/postgresql/data
 
@@ -15,7 +15,7 @@ services:
     image: redis:6.2.6
     ports:
       - "8091:6379"
-    command: redis-server --requirepass "um_HSfgprsyErtRr9fBRm2sN-0hghZvA"
+    command: redis-server --requirepass "4gfODtP-3dYRvsWL3pwQdgN5-0ed66kN"
     environment:
       - REDIS_REPLICATION_MODE=master
 
@@ -27,7 +27,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: net_watcher_test
-      POSTGRES_PASSWORD: "Kk3wMk0emYTURhWgi6Tlc5yt2ECk2Boh"
+      POSTGRES_PASSWORD: "VQKyDyyMmbhdl1RbrOMW1L6mMOERBIrr"
     volumes:
       - net_watcher_test_data:/var/lib/postgresql/data
 
@@ -35,7 +35,7 @@ services:
     image: redis:6.2.6
     ports:
       - "9091:6379"
-    command: redis-server --requirepass "RaXIdtMTc80ciDvCY6xU6vkEqV-RlJ5j"
+    command: redis-server --requirepass "Fxh-AnBDDWv_yL5xLfoGgPqFij0RYRo4"
     environment:
       - REDIS_REPLICATION_MODE=master
 

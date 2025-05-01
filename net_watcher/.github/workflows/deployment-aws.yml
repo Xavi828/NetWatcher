@@ -58,7 +58,7 @@ jobs:
         env:
           PROJECT_NAME: net_watcher
           AWS_NAME: net-watcher
-          DEPLOYMENT_BUCKET: net-watcher-deployment-9372594
+          DEPLOYMENT_BUCKET: net-watcher-deployment-8625617
           TARGET: ${{ github.event.inputs.target }}
         run: |
           # Deploy server to AWS

@@ -2,9 +2,16 @@ version: '3.8'
 
 services:
   api-nginx:
-    build: ./net_watcher_api
-    container_name: api-nginx
+    build:
+      context: net_watcher_api/
+      dockerfile: Dockerfile
     ports:
-      - "decidir"
-    depends_on:
-      - "servidor"
+      - "80:80"
+      - "443:443"
+    environment:
+      PORT: 80
+      SERVER_NAME: api.netwatcher.com
+      BACKEND_HOSTNAME: servidor_backend
+      WEB_SERVER1: web.netwatcher.local
+      WEB_SERVER2: web2.netwatcher.local
+    restart: always

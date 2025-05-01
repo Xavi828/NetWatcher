@@ -1,7 +1,0 @@
-class: ClientModel
-table: client_table ###cambiar###
-
-fields:
-  hostname: String
-  os: String
-  ip: String
