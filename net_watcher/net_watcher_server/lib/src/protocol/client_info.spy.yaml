@@ -1,0 +1,7 @@
+class: ClientInfo
+
+fields:
+  ipAddress: String
+  macAddress: String
+  hostname: String
+  os: String

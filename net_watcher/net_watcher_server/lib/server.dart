@@ -1,4 +1,4 @@
-import 'package:net_watcher_server/src/birthday_reminder.dart';
+import 'package:net_watcher_server/src/future_calls/birthday_reminder.dart';
 import 'package:serverpod/serverpod.dart';
 
 import 'package:net_watcher_server/src/web/routes/root.dart';

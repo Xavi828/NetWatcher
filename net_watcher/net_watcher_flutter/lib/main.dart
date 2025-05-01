@@ -1,6 +1,9 @@
-import 'package:net_watcher_client/net_watcher_client.dart';
 import 'package:flutter/material.dart';
+import 'package:net_watcher_client/net_watcher_client.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
+
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 
 /// Sets up a global client object that can be used to talk to the server from
 /// anywhere in our app. The client is generated from your server code
