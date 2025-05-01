@@ -1,15 +1,5 @@
 dartdoc:
-  nodoc:
-    - bin/ 
-    - test/
-    - logs/
-    - cache/
-  categories:
-    Core:
-      markdown: doc/core.md
-    Servicios:
-      markdown: doc/services.md
-    Comunicación:
-      markdown: doc/communication.md
-    Tareas:
-      markdown: doc/tasks.md
+  categories: 
+    "Endpoint":
+      markdown: doc/endpoint.md
+      name: Endpoint
