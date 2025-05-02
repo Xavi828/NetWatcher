@@ -1,4 +1,4 @@
 clientInfo:
-  - hello:
-greeting:
-  - hello:
+  - saveClientInfo:
+  - saveMultipleClientInfo:
+  - getAllClientInfo:

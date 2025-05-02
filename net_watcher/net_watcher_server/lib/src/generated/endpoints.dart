@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/client_info_endpoint.dart' as _i2;
-import '../endpoints/greeting_endpoint.dart' as _i3;
+import 'package:net_watcher_server/src/generated/client_info.dart' as _i3;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -22,66 +22,18 @@ class Endpoints extends _i1.EndpointDispatch {
           server,
           'clientInfo',
           null,
-        ),
-      'greeting': _i3.GreetingEndpoint()
-        ..initialize(
-          server,
-          'greeting',
-          null,
-        ),
+        )
     };
     connectors['clientInfo'] = _i1.EndpointConnector(
       name: 'clientInfo',
       endpoint: endpoints['clientInfo']!,
       methodConnectors: {
-        'hello': _i1.MethodConnector(
-          name: 'hello',
+        'saveClientInfo': _i1.MethodConnector(
+          name: 'saveClientInfo',
           params: {
-            'ipAddress': _i1.ParameterDescription(
-              name: 'ipAddress',
-              type: _i1.getType<String>(),
-              nullable: false,
-            ),
-            'macAddress': _i1.ParameterDescription(
-              name: 'macAddress',
-              type: _i1.getType<String>(),
-              nullable: false,
-            ),
-            'hostname': _i1.ParameterDescription(
-              name: 'hostname',
-              type: _i1.getType<String>(),
-              nullable: false,
-            ),
-            'os': _i1.ParameterDescription(
-              name: 'os',
-              type: _i1.getType<String>(),
-              nullable: false,
-            ),
-          },
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['clientInfo'] as _i2.ClientInfoEndpoint).hello(
-            session,
-            params['ipAddress'],
-            params['macAddress'],
-            params['hostname'],
-            params['os'],
-          ),
-        )
-      },
-    );
-    connectors['greeting'] = _i1.EndpointConnector(
-      name: 'greeting',
-      endpoint: endpoints['greeting']!,
-      methodConnectors: {
-        'hello': _i1.MethodConnector(
-          name: 'hello',
-          params: {
-            'name': _i1.ParameterDescription(
-              name: 'name',
-              type: _i1.getType<String>(),
+            'clientInfo': _i1.ParameterDescription(
+              name: 'clientInfo',
+              type: _i1.getType<_i3.ClientInfo>(),
               nullable: false,
             )
           },
@@ -89,11 +41,41 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['greeting'] as _i3.GreetingEndpoint).hello(
+              (endpoints['clientInfo'] as _i2.ClientInfoEndpoint)
+                  .saveClientInfo(
             session,
-            params['name'],
+            params['clientInfo'],
           ),
-        )
+        ),
+        'saveMultipleClientInfo': _i1.MethodConnector(
+          name: 'saveMultipleClientInfo',
+          params: {
+            'clientInfoList': _i1.ParameterDescription(
+              name: 'clientInfoList',
+              type: _i1.getType<List<_i3.ClientInfo>>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['clientInfo'] as _i2.ClientInfoEndpoint)
+                  .saveMultipleClientInfo(
+            session,
+            params['clientInfoList'],
+          ),
+        ),
+        'getAllClientInfo': _i1.MethodConnector(
+          name: 'getAllClientInfo',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['clientInfo'] as _i2.ClientInfoEndpoint)
+                  .getAllClientInfo(session),
+        ),
       },
     );
   }

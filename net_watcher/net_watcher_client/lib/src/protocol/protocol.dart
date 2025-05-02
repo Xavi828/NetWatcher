@@ -11,9 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'client_info.dart' as _i2;
-import 'greeting.dart' as _i3;
+import 'package:net_watcher_client/src/protocol/client_info.dart' as _i3;
 export 'client_info.dart';
-export 'greeting.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -32,14 +31,12 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i2.ClientInfo) {
       return _i2.ClientInfo.fromJson(data) as T;
     }
-    if (t == _i3.Greeting) {
-      return _i3.Greeting.fromJson(data) as T;
-    }
     if (t == _i1.getType<_i2.ClientInfo?>()) {
       return (data != null ? _i2.ClientInfo.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i3.Greeting?>()) {
-      return (data != null ? _i3.Greeting.fromJson(data) : null) as T;
+    if (t == List<_i3.ClientInfo>) {
+      return (data as List).map((e) => deserialize<_i3.ClientInfo>(e)).toList()
+          as T;
     }
     return super.deserialize<T>(data, t);
   }
@@ -50,9 +47,6 @@ class Protocol extends _i1.SerializationManager {
     if (className != null) return className;
     if (data is _i2.ClientInfo) {
       return 'ClientInfo';
-    }
-    if (data is _i3.Greeting) {
-      return 'Greeting';
     }
     return null;
   }
@@ -65,9 +59,6 @@ class Protocol extends _i1.SerializationManager {
     }
     if (dataClassName == 'ClientInfo') {
       return deserialize<_i2.ClientInfo>(data['data']);
-    }
-    if (dataClassName == 'Greeting') {
-      return deserialize<_i3.Greeting>(data['data']);
     }
     return super.deserializeByClassName(data);
   }

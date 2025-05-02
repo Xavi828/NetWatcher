@@ -1,7 +1,8 @@
 class: ClientInfo
-
+table: client_info
 fields:
   ipAddress: String
   macAddress: String
   hostname: String
   os: String
+  createdAt: DateTime

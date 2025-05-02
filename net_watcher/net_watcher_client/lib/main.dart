@@ -3,6 +3,9 @@ import 'src/services/client_info_service.dart';
 import 'src/services/network_service.dart';
 import 'src/services/device_service.dart';
 
+export 'src/protocol/protocol.dart';
+export 'package:serverpod_client/serverpod_client.dart';
+
 void main(){
   runApp(const MyApp());
 }
