@@ -1,6 +1,6 @@
 networks:
   netwatcher_net:
-    external: true
+    driver: bridge
 
 services:
 
@@ -9,8 +9,6 @@ services:
     container_name: net_watcher_web_1
     networks:
       - netwatcher_net
-    ports:
-      - "8081:80"
     environment:
       PORT: 80
       ROOT_DIR: "/usr/share/nginx/html"
@@ -21,8 +19,6 @@ services:
     container_name: net_watcher_web_2
     networks:
       - netwatcher_net
-    ports:
-      - "8082:80"
     environment:
       PORT: 80
       ROOT_DIR: "/usr/share/nginx/html"
@@ -41,3 +37,44 @@ services:
       BACKEND_HOSTNAME: net_watcher_web_1:80
       WEB_SERVER1: net_watcher_web_1:80
       WEB_SERVER2: net_watcher_web_2:80
+
+  postgres-master:
+    image: postgres:15
+    restart: unless-stopped
+    container_name: net_watcher_db_master
+    env_file:
+      - net_watcher_bd/master_bd.env
+    volumes:
+      - ./net_watcher_bd/data/master_bd:/var/lib/postgresql/data
+      - ./net_watcher_bd/scripts/01_init_netwatcher.sh:/docker-entrypoint-initdb.d/01_init_netwatcher.sh
+      - ./net_watcher_bd/scripts/02_init_base.sql:/scripts/02_init_base.sql
+      - ./net_watcher_bd/scripts/03_init_schema.sql:/scripts/03_init_schema.sql
+      - ./net_watcher_bd/config/master:/etc/postgresql_custom    
+    networks:
+      - netwatcher_net
+    healthcheck:
+      test: 'pg_isready -U user --dbname=postgres'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: postgres -c config_file=/etc/postgresql_custom/postgresql.conf -c hba_file=/etc/postgresql_custom/pg_hba.conf
+
+  postgres_replica:
+    image: postgres:15
+    restart: unless-stopped
+    container_name: net_watcher_db_slave
+    environment:
+      POSTGRES_PASSWORD: password
+      PGUSER: replicator
+      PGPASSWORD: replicator_password
+      POSTGRES_DB: postgres
+    volumes:
+      - ./net_watcher_bd/data/slave_bd:/var/lib/postgresql/data
+      - ./net_watcher_bd/scripts/slave_entrypoint.sh:/docker-entrypoint-initdb.d/slave_entrypoint.sh
+    networks:
+      - netwatcher_net
+    depends_on:
+      postgres-master:
+        condition: service_healthy
+
+
